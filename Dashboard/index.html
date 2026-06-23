@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EGS Network Digital Twin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://kit.fontawesome.com/a2d9b2f8d1.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="app" class="layout">
+    <aside class="sidebar">
+      <div class="brand">EGS Digital Twin</div>
+      <nav class="nav">
+        <button class="nav-item active" data-section="overview"> <i class="fas fa-tachometer-alt"></i> Overview</button>
+        <button class="nav-item" data-section="map"> <i class="fas fa-map-marked-alt"></i> Campus Map</button>
+        <button class="nav-item" data-section="devices"> <i class="fas fa-server"></i> Devices</button>
+        <button class="nav-item" data-section="alerts"> <i class="fas fa-exclamation-triangle"></i> Alerts</button>
+        <button class="nav-item" data-section="analytics"> <i class="fas fa-chart-line"></i> Analytics</button>
+      </nav>
+      <div class="sidebar-footer">Logged as: IT Admin</div>
+    </aside>
+
+    <main class="main">
+      <header class="main-header">
+        <h1>Overview</h1>
+        <div class="filters">
+          <select id="filter-campus">
+            <option value="all">All Campuses</option>
+            <option value="A">Campus A</option>
+            <option value="B">Campus B</option>
+            <option value="C">Campus C</option>
+          </select>
+          <select id="filter-type">
+            <option value="all">All Devices</option>
+            <option value="router">Router</option>
+            <option value="switch">Switch</option>
+            <option value="ap">Access Point</option>
+            <option value="server">Server</option>
+          </select>
+          <select id="filter-status">
+            <option value="all">All Status</option>
+            <option value="green">Healthy</option>
+            <option value="yellow">Warning</option>
+            <option value="red">Critical</option>
+          </select>
+        </div>
+      </header>
+
+      <section class="map-area">
+        <div class="map-toolbar">
+          <button id="btn-toggle-topology" title="Toggle topology view">Toggle Topology</button>
+          <button id="btn-zoom-in">Zoom +</button>
+          <button id="btn-zoom-out">Zoom -</button>
+        </div>
+        <div id="campus-map" class="campus-map" tabindex="0" aria-label="Campus Map">
+          <!-- SVG map will be injected here -->
+        </div>
+      </section>
+
+      <section class="charts">
+        <div class="chart-card">
+          <h3>WAN Usage (last 24h)</h3>
+          <canvas id="wanChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Top 5 Devices by Load</h3>
+          <canvas id="topDevices"></canvas>
+        </div>
+        <div class="chart-card heatmap-card">
+          <h3>Wi-Fi Heatmap (simulated)</h3>
+          <canvas id="heatmap" width="600" height="180"></canvas>
+        </div>
+      </section>
+
+    </main>
+
+    <aside class="right-panel">
+      <div class="panel-section">
+        <h3>Device Health</h3>
+        <div id="device-cards" class="device-cards">
+          <!-- device cards populated by JS -->
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h3>Predictive Alerts</h3>
+        <ul id="predictive-alerts" class="alerts-list">
+          <!-- alerts populated by JS -->
+        </ul>
+      </div>
+
+      <div class="panel-section">
+        <h3>Quick Actions</h3>
+        <button id="export-csv">Export CSV</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- device modal -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
